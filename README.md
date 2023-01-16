@@ -1,6 +1,6 @@
 # Creating fake job experiences with a fine-tuned GPT2 model
 
-Welcome to my Github repository where I explored the possibilities of fine-tuning the language model GPT-2 with real job
+Welcome to my GitHub repository where I explored the possibilities of fine-tuning the language model GPT-2 with real job
 experiences. In this experiment, I aimed to train the model to generate new job experiences from a given role, using a
 dataset of real job experiences.
 
@@ -8,19 +8,38 @@ While this may not have practical applications in the real world, it served as a
 understanding the process of fine-tuning a language learning model. Through this repository, I hope to share my insights
 and findings on the capabilities and limitations of GPT-2 in generating job experiences.
 
-The goal was to obtain a model where, starting with a sentence like "As a Software Engineer, I", the model generates a
-complete new sentence related to the job title ("Software Engineer").
+The goal was to obtain a model where, starting with a sentence like "As a Software Engineer, I ", the model generates a
+complete new sentence related to the job title ("Software Engineer"). If we use the default GPT-2 version to complete
+the
+sentence "As a Software Engineer, I " we can obtain something similar to:
+
+```text
+As a software architect, I have to confess I was not thrilled with the use of Linux in my own process. It's not a
+free software choice; there's a huge amount of work involved, and in the end of my days of code.
+```
+
+Or
+
+```text
+As a software architect, I can attest to that. He is a long time user of my Java projects. I found out about
+the development process for my own open source platform of C++, and decided to make it my personal project.
+```
+
+We can see that these are not the kind of sentences to add to a job experience list as a Software Architect :)
 
 ## Process
 
-### Step 1 - Getting the training dataset
+### Step 1 - Getting the dataset
 
-I downloaded multi-labeled dataset of resumes labeled with occupations from the following repository, with around 30k
-resumes:
-
-https://github.com/florex/resume_corpus
+The first step to retrain a language model is to obtain a good dataset. With this goal in mind, I did some research and
+I found [this repository](https://github.com/florex/resume_corpus) with a multi-labeled dataset of resumes labeled with
+occupations from the following repository, with around 30k resumes.
 
 ### Step 2 - Data wrangling
+
+However, it is important to note that the quality and relevance of the dataset will have a significant impact on the
+performance of the retrained model. For this reason I spent some time removing duplicate data, correcting errors, and
+removing irrelevant or confidential information.
 
 To train a LLM data needs to be in a concrete format, so the first step is to build a unique csv from all the resumes:
 
@@ -38,9 +57,10 @@ Open http://localhost:8888/notebooks/step2.ipynb
 
 ### Step 3 - Training
 
-Finally, upload the step3.ipynb to Google Colab, altogether with the training data, and train the model.
-
-At the end of the training, you'll have a model that can be used like this:
+Once the data is cleaned, it can be further preprocessed, such as tokenizing and vectorizing the text, in order to
+prepare it for training. This process is done opening the step3.ipynb in Google Colab, altogether with the training
+data, and train the model.
+After ~45 min of training, we obtain a new fine tuned model that can be used like this:
 
 ```python
 model.eval()
@@ -84,6 +104,9 @@ tensor([[ 1722,   257, 45125,    83,  1574,  7068,    11,   314]],
 4: As a sowtware architect, I used various types of data base and Hadoop/Hibernate relational databases, including MySQL, MongoDB, Cassandra to extract information from the database and to insert/delete data from the database.
 
 ```
+
+Clearly a better result than the initial ones.
+
 
 ## To reproduce the experiment
 
