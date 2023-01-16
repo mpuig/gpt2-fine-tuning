@@ -20,9 +20,7 @@ the development process for my own open source platform of C++, and decided to m
 
 We can see that these are not the kind of sentences to add to a job experience list as a Software Architect :)
 
-Test it here:
-
-https://huggingface.co/mpuig/job-experience
+Test it here: https://huggingface.co/mpuig/job-experience
 
 ## Process
 
