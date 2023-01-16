@@ -1,6 +1,10 @@
-# Creating fake job experiences with a fine-tuned GPT2 model
+# Fine-tune GPT-2 model
 
-Welcome to my GitHub repository where I explore the potential of fine-tuning the GPT-2 language model with real job experiences. The aim of this experiment is to train the model to generate new job experiences for a given role, using a dataset of real job experiences.
+Welcome to my GitHub repository where I explore the potential of fine-tuning the GPT-2 language model with specific type of sentences like job experience descriptions written in sites like LinkedIn. 
+
+## Goal: Create fake job experience descriptions
+
+The aim of this experiment is to train the model to generate new job experiences for a given role, using a dataset of real job experiences.
 
 Although the practical applications of this may be limited, it served as a valuable learning opportunity for understanding the fine-tuning process of a language model. Through this repository, I hope to share my insights and findings on GPT-2's capabilities and limitations in generating job experiences.
 
