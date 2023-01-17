@@ -1,14 +1,20 @@
 # Fine-tune GPT-2 model
 
-Welcome to my GitHub repository where I explore the potential of fine-tuning the GPT-2 language model with specific type of sentences like job experience descriptions written in sites like LinkedIn.
+Welcome to my GitHub repository where I explore the potential of fine-tuning the GPT-2 language model with specific type
+of sentences like job experience descriptions written in sites like LinkedIn.
 
 ## Goal: Create fake job experience descriptions
 
-The aim of this experiment is to train the model to generate new job experiences for a given role, using a dataset of real job experiences.
+The aim of this experiment is to train the model to generate new job experiences for a given role, using a dataset of
+real job experiences.
 
-Although the practical applications of this may be limited, it served as a valuable learning opportunity for understanding the fine-tuning process of a language model. Through this repository, I hope to share my insights and findings on GPT-2's capabilities and limitations in generating job experiences.
+Although the practical applications of this may be limited, it served as a valuable learning opportunity for
+understanding the fine-tuning process of a language model. Through this repository, I hope to share my insights and
+findings on GPT-2's capabilities and limitations in generating job experiences.
 
-The ultimate goal was to create a model that, given a sentence such as "As a Software Engineer, I ", generates a complete, relevant sentence related to the job title ("Software Engineer"). Using the default GPT-2 model to complete the sentence "As a Software Engineer, I " may result in something like:
+The ultimate goal was to create a model that, given a sentence such as "As a Software Engineer, I ", generates a
+complete, relevant sentence related to the job title ("Software Engineer"). Using the default GPT-2 model to complete
+the sentence "As a Software Engineer, I " may result in something like:
 
 ```text
 As a Software Engineer, I have to confess I was not thrilled with the use of Linux in my own process. It's not a
@@ -42,7 +48,7 @@ removing irrelevant or confidential information.
 
 To train a LLM data needs to be in a concrete format, so the first step is to build a unique csv from all the resumes:
 
-```
+```bash
 python step1.py
 ```
 
@@ -56,7 +62,7 @@ The output of the first step is the `job_experiences.csv` file with two columns:
 
 The next step, using a jupyter notebook, is to do some data wrangling and build the final csv datasets:
 
-```
+```bash
 jupyter notebook
 ```
 
@@ -75,7 +81,7 @@ duplicates, URLs, very short descriptions,...)
 
 With the previous aggregation, we obtain the following results:
 
-```
+```python
 df2.groupby('keywords').count()
 
 RoR developer,1381
@@ -96,7 +102,7 @@ singular present (tag "VBP").
 
 And we can prepare the sentences to write to the dataset with the correct format as a csv file:
 
-```
+```python
 f"as a {title}, {description}<|endoftext|>"
 ```
 
@@ -136,7 +142,7 @@ for i, sample_output in enumerate(sample_outputs):
 
 Obtaining an output like this:
 
-```
+```bash
 The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
 Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
 
@@ -160,13 +166,13 @@ Clearly a better result than the initial ones.
 
 First, you need to install the following packages:
 
-```
+```bash
 pip install jupyter torch torchvision torchaudio datasets ftfy flashtext pandas numpy scikit-learn accelerate
 ```
 
 Run Jupyter notebooks:
 
-```
+```bash
 jupyter notebook
 ```
 
@@ -176,19 +182,19 @@ jupyter notebook
 
 Get the transformers code from Huggingface:
 
-```
+```bash
 git clone https://github.com/huggingface/transformers.git
 ```
 
 Go to the examples directory:
 
-```
+```bash
 cd transformers/main/examples/pytorch/language-modeling/run_clm_no_trainer.py
 ```
 
 Run the following python command:
 
-```
+```bash
 python run_clm_no_trainer.py \
     --model_name_or_path gpt2 \
     --train_file dataset_train.csv \
