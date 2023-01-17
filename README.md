@@ -1,18 +1,14 @@
-# Creating fake job experiences with a fine-tuned GPT2 model
+# Fine-tune GPT-2 model
 
-Welcome to my GitHub repository where I explored the possibilities of fine-tuning the language model GPT-2 with real job
-experiences. In this experiment, I aimed to train the model to generate new job experiences from a given role, using a
-dataset of real job experiences.
+Welcome to my GitHub repository where I explore the potential of fine-tuning the GPT-2 language model with specific type of sentences like job experience descriptions written in sites like LinkedIn.
 
-While this may not have practical applications in the real world, it served as a valuable learning experience for
-understanding the process of fine-tuning a language learning model. Through this repository, I hope to share my insights
-and findings on the capabilities and limitations of GPT-2 in generating job experiences.
+## Goal: Create fake job experience descriptions
 
-The goal was to obtain a model where, starting with a sentence like "As a Software Engineer, I ...", the model generates
-a complete new sentence related to the job title ("Software Engineer").
+The aim of this experiment is to train the model to generate new job experiences for a given role, using a dataset of real job experiences.
 
-If we take the default GPT-2 model to complete the sentence "As a Software Engineer, I ..." we can obtain sentences
-similar to:
+Although the practical applications of this may be limited, it served as a valuable learning opportunity for understanding the fine-tuning process of a language model. Through this repository, I hope to share my insights and findings on GPT-2's capabilities and limitations in generating job experiences.
+
+The ultimate goal was to create a model that, given a sentence such as "As a Software Engineer, I ", generates a complete, relevant sentence related to the job title ("Software Engineer"). Using the default GPT-2 model to complete the sentence "As a Software Engineer, I " may result in something like:
 
 ```text
 As a Software Engineer, I have to confess I was not thrilled with the use of Linux in my own process. It's not a
@@ -27,6 +23,8 @@ the development process for my own open source platform of C++, and decided to m
 ```
 
 ...and we can see that these are not the kind of sentences to add to a job experience list as a Software Engineer :)
+
+Test it here: https://huggingface.co/mpuig/job-experience
 
 ## Process
 
