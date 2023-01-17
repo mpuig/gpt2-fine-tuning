@@ -8,24 +8,25 @@ While this may not have practical applications in the real world, it served as a
 understanding the process of fine-tuning a language learning model. Through this repository, I hope to share my insights
 and findings on the capabilities and limitations of GPT-2 in generating job experiences.
 
-The goal was to obtain a model where, starting with a sentence like "As a Software Engineer, I ", the model generates a
-complete new sentence related to the job title ("Software Engineer"). If we use the default GPT-2 version to complete
-the
-sentence "As a Software Engineer, I " we can obtain something similar to:
+The goal was to obtain a model where, starting with a sentence like "As a Software Engineer, I ...", the model generates
+a complete new sentence related to the job title ("Software Engineer").
+
+If we take the default GPT-2 model to complete the sentence "As a Software Engineer, I ..." we can obtain sentences
+similar to:
 
 ```text
-As a software architect, I have to confess I was not thrilled with the use of Linux in my own process. It's not a
+As a Software Engineer, I have to confess I was not thrilled with the use of Linux in my own process. It's not a
 free software choice; there's a huge amount of work involved, and in the end of my days of code.
 ```
 
-Or
+or
 
 ```text
-As a software architect, I can attest to that. He is a long time user of my Java projects. I found out about
+As a Software Engineer, I can attest to that. He is a long time user of my Java projects. I found out about
 the development process for my own open source platform of C++, and decided to make it my personal project.
 ```
 
-We can see that these are not the kind of sentences to add to a job experience list as a Software Architect :)
+...and we can see that these are not the kind of sentences to add to a job experience list as a Software Engineer :)
 
 ## Process
 
@@ -47,13 +48,63 @@ To train a LLM data needs to be in a concrete format, so the first step is to bu
 python step1.py
 ```
 
-And then, using a jupyter notebook to do some data wrangling and build the final csv datasets:
+The output of the first step is the `job_experiences.csv` file with two columns: `title` and `description`. eg:
+
+| title                                         | description                                                                                                          |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| Autodesk Lead Database Administrator Autodesk | Created a custom monitoring solution for MariaDB MaxScale using the MariaDB Connect Engine.                          |
+| Java Senior Software Engineer Java Senior     | Expertise in software development methodologies like Waterfall, Agile development and Rapid Application Development. |
+| Project Manager                               | Praised for efficiency and reducing labor costs.                                                                     |
+
+The next step, using a jupyter notebook, is to do some data wrangling and build the final csv datasets:
 
 ```
 jupyter notebook
 ```
 
-Open http://localhost:8888/notebooks/step2.ipynb
+The notebook uses [flashtext](https://github.com/vi3k6i5/flashtext) to search for different uses of the same title and
+group them under the same name. E.g.
+
+```python
+    ...
+"web developer": ["web developer", "web programmer"],
+"RoR developer": ["RoR developer", "ruby on rails", "RoR", "Ruby"],
+...
+```
+
+With the correct titles, we run a typical clean up to the descriptions (remove bullet points, html tags, quotes,
+duplicates, URLs, very short descriptions,...)
+
+With the previous aggregation, we obtain the following results:
+
+```
+df2.groupby('keywords').count()
+
+RoR developer,1381
+analyst,46086
+backend developer,21268
+consultant,14797
+customer service,6648
+data engineer,2953
+database administrator,32956
+frontend developer,22669
+java developer,82282
+javascript developer,14007
+network engineer,9214
+```
+
+Finally we use [spacy](https://spacy.io/) to filter only the rows with a description using a verb, non-3rd person
+singular present (tag "VBP").
+
+And we can prepare the sentences to write to the dataset with the correct format as a csv file:
+
+```
+f"as a {title}, {description}<|endoftext|>"
+```
+
+The final csv has 395.401 rows.
+
+Open the [jupyter notebook](step2.ipynb) to see the code
 
 ### Step 3 - Training
 
@@ -106,7 +157,6 @@ tensor([[ 1722,   257, 45125,    83,  1574,  7068,    11,   314]],
 ```
 
 Clearly a better result than the initial ones.
-
 
 ## To reproduce the experiment
 

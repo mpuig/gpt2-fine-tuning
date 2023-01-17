@@ -19,21 +19,6 @@ def format_data(data):
     return list(map(str.strip, data))
 
 
-def generate_title_file():
-    resume_filenames = load_resume_filenames()
-    titles = []
-    for filename in resume_filenames:
-        with open(filename, encoding="ISO-8859-1") as f:
-            file_data = format_data(ftfy.fix_text(f.read()))
-
-        for line in file_data:
-            if " - " in line:
-                titles.append(line.split(" - ")[0])
-
-    with open('data/titles.txt', 'w') as f:
-        f.write('\n'.join(titles) + '\n')
-
-
 def main() -> int:
     resume_filenames = load_resume_filenames()
     with open("data/job_experiences.csv", "w") as output:
